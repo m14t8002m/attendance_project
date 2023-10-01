@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<title>社員詳細</title>
+	<meta charset="utf-8" />
+</head>
+
+<body>
+	<h1>社員詳細</h1>
+	<h2 th:text="${employeeDetail[0].name}"></h2>
+	<button onclick="location.href='complete'">出勤</button>
+	<button>休憩開始</button>
+	<button>休憩終了</button>
+	<button>退勤</button>
+	<table border="1">
+		<tr>
+			<th>出勤日時</th>
+			<th>休憩開始日時</th>
+			<th>休憩終了日時</th>
+			<th>退勤日時</th>
+		</tr>
+		<tr th:each="clock : ${clockResult}">
+			<td th:text="${clock.clockIn}"></td>
+			<td th:text="${clock.breakStart}"></td>
+			<td th:text="${clock.breakEnd}"></td>
+			<td th:text="${clock.clockOut}"></td>
+		</tr>
+	</table>
+	<button onclick="location.href='/'">社員一覧へ</button>
+</body>
