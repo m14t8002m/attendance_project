@@ -9,7 +9,6 @@ import org.springframework.stereotype.Repository;
 import org.springframework.web.client.RestTemplate;
 
 import com.example.demo.AttendanceSystem.data.Clock;
-import com.example.demo.AttendanceSystem.data.ClockTry;
 import com.example.demo.AttendanceSystem.data.Employee;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -73,23 +72,17 @@ public class AttendanceSystemRepository {
 
 		String url = "https://jsn9xu2vsk.execute-api.ap-northeast-1.amazonaws.com/sample/attendanceandabsence/clock";
 
-		//		String json = "{"
-		//				+ "\"employee_id\":\"1\","
-		//				+ "\"clock_in\":\"2023-09-30 09:00:00\","
-		//				+ "\"break_start\":\"\","
-		//				+ "\"break_end\":\"\","
-		//				+ "\"clock_out\":\"\""
-		//				+ "}";
+		String json = "\"body\": \"{"
+				+ "\"employee_id\":\"1\","
+				+ "\"clock_in\":\"2023-07-07 09:00:00\","
+				+ "\"break_start\":\"\","
+				+ "\"break_end\":\"\","
+				+ "\"clock_out\":\"\""
+				+ "}\"";
 
-		//		RequestEntity<String> request = RequestEntity.post(url)
-		//				.contentType(MediaType.APPLICATION_JSON)
-		//				.body(json);
-
-		ClockTry clockTry = new ClockTry(1, "2023-09-30 09:00:00", "", "", "");
-
-		RequestEntity<ClockTry> request = RequestEntity.post(url)
+		RequestEntity<String> request = RequestEntity.post(url)
 				.contentType(MediaType.APPLICATION_JSON)
-				.body(clockTry);
+				.body(json);
 
 		RestTemplate restTemplate = new RestTemplate();
 		ResponseEntity<String> response = restTemplate.exchange(request, String.class);
