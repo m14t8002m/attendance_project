@@ -1,6 +1,8 @@
 package com.example.demo.AttendanceSystem.service;
 
 import java.io.IOException;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Arrays;
 import java.util.List;
 
@@ -43,11 +45,46 @@ public class AttendanceSystemService {
 
 	}
 
-	public String postTry() throws IOException {
+	public void postEmployee(String postName, String postHometown, String postJoiningMonth) throws IOException {
 
-		String postTry = attendanceSystemRepository.postTry();
+		if (postJoiningMonth != "") {
+			postJoiningMonth += "-01";
+		}
 
-		return postTry;
+		if (postName != "") {
+			attendanceSystemRepository.postEmployee(postName, postHometown, postJoiningMonth);
+		}
 
 	}
+
+	public void postClock(String actionName, String employeeId) throws IOException {
+
+		LocalDateTime currentDate = LocalDateTime.now();
+		DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+		String currentTime = dateFormat.format(currentDate);
+
+		String clockIn = "";
+		String breakStart = "";
+		String breakEnd = "";
+		String clockOut = "";
+
+		switch (actionName) {
+		case "出勤":
+			clockIn = currentTime;
+			break;
+		case "休憩開始":
+			breakStart = currentTime;
+			break;
+		case "休憩終了":
+			breakEnd = currentTime;
+			break;
+		case "退勤":
+			clockOut = currentTime;
+			break;
+		}
+
+		attendanceSystemRepository.postClock(employeeId, clockIn, breakStart, breakEnd, clockOut);
+
+	}
+
 }

@@ -68,29 +68,51 @@ public class AttendanceSystemRepository {
 		return clockResult;
 	}
 
-	public String postTry() throws IOException {
+	public void postEmployee(String postName, String postHometown, String postJoiningMonth) throws IOException {
 
-		String url = "https://jsn9xu2vsk.execute-api.ap-northeast-1.amazonaws.com/sample/attendanceandabsence/clock";
+		String url = "https://jsn9xu2vsk.execute-api.ap-northeast-1.amazonaws.com/sample/attendanceandabsence/employee";
 
-		String json = "\"body\": \"{"
-				+ "\"employee_id\":\"1\","
-				+ "\"clock_in\":\"2023-07-07 09:00:00\","
-				+ "\"break_start\":\"\","
-				+ "\"break_end\":\"\","
-				+ "\"clock_out\":\"\""
-				+ "}\"";
+		String postJson = '{'
+				+ "\"body\": \"{"
+				+ "\\\"name\\\":\\\"" + postName + "\\\","
+				+ "\\\"hometown\\\":\\\"" + postHometown + "\\\","
+				+ "\\\"joining_month\\\":\\\"" + postJoiningMonth + "\\\""
+				+ "}\""
+				+ '}';
 
 		RequestEntity<String> request = RequestEntity.post(url)
 				.contentType(MediaType.APPLICATION_JSON)
-				.body(json);
+				.body(postJson);
 
 		RestTemplate restTemplate = new RestTemplate();
-		ResponseEntity<String> response = restTemplate.exchange(request, String.class);
 
-		System.out.println(request);
-		System.out.println(response); //結果
+		restTemplate.exchange(request, String.class);
 
-		return "try";
+	}
+
+	public void postClock(String employeeId, String clockIn, String breakStart, String breakEnd, String clockOut)
+			throws IOException {
+
+		String url = "https://jsn9xu2vsk.execute-api.ap-northeast-1.amazonaws.com/sample/attendanceandabsence/clock";
+
+		String postJson = '{'
+				+ "\"body\": \"{"
+				+ "\\\"employee_id\\\":\\\"" + employeeId + "\\\","
+				+ "\\\"clock_in\\\":\\\"" + clockIn + "\\\","
+				+ "\\\"break_start\\\":\\\"" + breakStart + "\\\","
+				+ "\\\"break_end\\\":\\\"" + breakEnd + "\\\","
+				+ "\\\"clock_out\\\":\\\"" + clockOut + "\\\""
+				+ "}\""
+				+ '}';
+
+		RequestEntity<String> request = RequestEntity.post(url)
+				.contentType(MediaType.APPLICATION_JSON)
+				.body(postJson);
+
+		RestTemplate restTemplate = new RestTemplate();
+
+		restTemplate.exchange(request, String.class);
+
 	}
 
 }

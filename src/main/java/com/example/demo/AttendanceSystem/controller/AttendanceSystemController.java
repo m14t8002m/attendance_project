@@ -53,12 +53,24 @@ public class AttendanceSystemController {
 
 	}
 
-	@GetMapping("/complete")
-	public String newTry() throws IOException {
+	@PostMapping("/employee_post")
+	public String postEmployee(@RequestParam("postName") String postName,
+			@RequestParam("postHometown") String postHometown,
+			@RequestParam("postJoiningMonth") String postJoiningMonth) throws IOException {
 
-		String postTry = attendanceSystemService.postTry();
+		attendanceSystemService.postEmployee(postName, postHometown, postJoiningMonth);
 
-		return "complete.html";
+		return "redirect:/";
+
+	}
+
+	@PostMapping("/clock_post")
+	public String postClock(@RequestParam(value = "actionName") String actionName,
+			@RequestParam("employeeId") String employeeId) throws IOException {
+
+		attendanceSystemService.postClock(actionName, employeeId);
+
+		return "redirect:/";
 
 	}
 
